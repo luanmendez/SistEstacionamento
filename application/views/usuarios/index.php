@@ -41,12 +41,13 @@ $this->load->view('layout/navbar');
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3>
-                                <?php echo substr($titulo, 0, 9) ?>
-                            </h3>
+                            <a class="btn btn-success" href="#"> 
+                                <i class="fas fa-plus"></i>
+                                Novo 
+                            </a>
                         </div>
                         <div class="card-body">
-                            <table id="data_table" class="table">
+                            <table id="data_table" class="table data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -54,21 +55,23 @@ $this->load->view('layout/navbar');
                                         <th>Email</th>
                                         <th>Nome</th>
                                         <th>Status</th>
-                                        <th class="nosort">Ações</th>
+                                        <th class="nosort text-center">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach($usuarios as $usuario): ?>
-                                        <tr>
+                                        <tr class="align-middle">
                                             <td><?php echo $usuario->id ?></td>
                                             <td><?php echo $usuario->username ?></td>
                                             <td><?php echo $usuario->email ?></td>
                                             <td><?php echo $usuario->first_name ?></td>
-                                            <td><?php echo $usuario->active == 1 ? "Ativo" : "Inativo"  ?></td>                                            
                                             <td>
-                                                <div>
-                                                    <a href="#"><i class="ik ik-edit-2"></i></a>
-                                                    <a href="#"><i class="ik ik-trash-2"></i></a>
+                                                <?php echo $usuario->active == 1 ? '<span class="badge badge-pill badge-success mb-1">Ativo</span>' : '<span class="badge badge-pill badge-danger mb-1">Inativo</span>'  ?>
+                                            </td>                                            
+                                            <td>
+                                                <div class="text-center"> 
+                                                    <a title="Editar usuário" href="#" type="button" class="btn btn-icon btn-primary"><i class="ik ik-edit-2"></i></a>                                                                                                                         
+                                                    <a title="Excluir usuário" href="#" type="button" class="btn btn-icon btn-danger"><i class="ik ik-trash"></i></a>
                                                 </div>
                                             </td>
                                         </tr>

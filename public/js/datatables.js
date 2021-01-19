@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var table = $('#data_table').DataTable({
+    var table = $('.data-table').DataTable({
         responsive: true,
         select: true,
         'aoColumnDefs': [{
@@ -8,7 +8,7 @@ $(document).ready(function() {
             'aTargets': ['nosort']
         }]
     });
-    $('#data_table tbody').on( 'click', 'tr', function() {
+    $('.data-table tbody').on( 'click', 'tr', function() {
         if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
         }
