@@ -54,6 +54,7 @@ $this->load->view('layout/navbar');
                                         <th>Usuario</th>
                                         <th>Email</th>
                                         <th>Nome</th>
+                                        <th>Perfil de acesso</th>
                                         <th>Status</th>
                                         <th class="nosort text-center">Ações</th>
                                     </tr>
@@ -65,12 +66,15 @@ $this->load->view('layout/navbar');
                                             <td><?php echo $usuario->username ?></td>
                                             <td><?php echo $usuario->email ?></td>
                                             <td><?php echo $usuario->first_name ?></td>
+                                            <td> 
+                                                <?php echo $this->ion_auth->is_admin($usuario->id) == 1 ? "Administrador" : "Atendente" ?>
+                                            </td>
                                             <td>
                                                 <?php echo $usuario->active == 1 ? '<span class="badge badge-pill badge-success mb-1">Ativo</span>' : '<span class="badge badge-pill badge-danger mb-1">Inativo</span>'  ?>
                                             </td>                                            
                                             <td>
                                                 <div class="text-center"> 
-                                                    <a title="Editar usuário" href="#" type="button" class="btn btn-icon btn-primary"><i class="ik ik-edit-2"></i></a>                                                                                                                         
+                                                    <a title="Editar usuário" href="<?php echo base_url('usuarios/core/'.$usuario->id) ?>" type="button" class="btn btn-icon btn-primary"><i class="ik ik-edit-2"></i></a>                                                                                                                         
                                                     <a title="Excluir usuário" href="#" type="button" class="btn btn-icon btn-danger"><i class="ik ik-trash"></i></a>
                                                 </div>
                                             </td>

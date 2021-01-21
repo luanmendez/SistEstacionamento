@@ -27,4 +27,31 @@
             $this->load->view('layout/footer');
         }
 
+        public function core($id = NULL){
+            if(!$id){
+                echo "Cadastro novo usuário";
+                
+            }else{
+                if(!$this->ion_auth->user($id)->row()){
+                    exit('Usuario não existe');
+                }else{
+                    // -- EDITAR USUÁRIO 
+                    $data = array(
+                        'titulo'    => 'Editar Usuário',                
+                        'subtitulo' => '',
+                        'usuario'   => $this->ion_auth->user($id)->row(), // get user id
+                        
+                    );
+        
+                   
+        
+                    $this->load->view('layout/header', $data);
+                    $this->load->view('usuarios/core');
+                    $this->load->view('layout/footer');
+                }
+                
+            }
+           
+        }
+
     }
