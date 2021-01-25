@@ -36,18 +36,44 @@
                     exit('Usuario não existe');
                 }else{
                     // -- EDITAR USUÁRIO 
-                    $data = array(
-                        'titulo'    => 'Editar Usuário',                
-                        'subtitulo' => '',
-                        'usuario'   => $this->ion_auth->user($id)->row(), // get user id
+
+                    $this->form_validation->set_rules('first_name', 'Nome', 'trim|required|min_length[5]|max_length[20]');
+                    $this->form_validation->set_rules('last_name', 'Sobrenome', 'trim|required|min_length[5]|max_length[20]');
+                    $this->form_validation->set_rules('username', 'Usuario', 'trim|required|min_length[5]|max_length[20]');
+                    $this->form_validation->set_rules('email', 'E-mail', 'trim|valid_email|required|min_length[5]|max_length[200]');
+                    $this->form_validation->set_rules('password', 'Senha', 'trim|min_length[8]');
+                    $this->form_validation->set_rules('confirmacao', 'confirmação de senha', 'trim|matches[password]');
+
+
+                    if($this->form_validation->run()){
+                        echo '<pre>';
+                        print_r($this->input->post());
+                        exit();
+
+                    }else{
+                        // Erro de validação
+
+                        $data = array(
+                            'titulo'    => 'Editar Usuário',                
+                            'subtitulo' => '',
+                            'icone_view' => 'ik ik-user',
+                            'usuario'   => $this->ion_auth->user($id)->row(), // get user id
+                            'perfil_usuario'    => $this->ion_auth->get_users_groups($id)->row(),
+                            
+                        );
                         
-                    );
-        
-                   
-        
-                    $this->load->view('layout/header', $data);
-                    $this->load->view('usuarios/core');
-                    $this->load->view('layout/footer');
+                        //echo '<pre>';
+                        //print_r($data['perfil_usuario']);
+                        //exit;
+                
+                        $this->load->view('layout/header', $data);
+                        $this->load->view('usuarios/core');
+                        $this->load->view('layout/footer');
+
+
+                    }
+
+                    
                 }
                 
             }
