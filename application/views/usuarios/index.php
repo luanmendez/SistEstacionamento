@@ -36,14 +36,29 @@ $this->load->view('layout/navbar');
                 </div>
             </div>
 
+            <?php if ($message = $this->session->flashdata('sucesso')) : ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>
+                                <?php echo $message ?>
+                            </strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <i class="ik ik-x"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            <?php endif ?>
 
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <a class="btn btn-success" href="#"> 
+                            <a class="btn btn-success" href="#">
                                 <i class="fas fa-plus"></i>
-                                Novo 
+                                Novo
                             </a>
                         </div>
                         <div class="card-body">
@@ -60,21 +75,21 @@ $this->load->view('layout/navbar');
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($usuarios as $usuario): ?>
+                                    <?php foreach ($usuarios as $usuario) : ?>
                                         <tr class="align-middle">
                                             <td><?php echo $usuario->id ?></td>
                                             <td><?php echo $usuario->username ?></td>
                                             <td><?php echo $usuario->email ?></td>
                                             <td><?php echo $usuario->first_name ?></td>
-                                            <td> 
+                                            <td>
                                                 <?php echo $this->ion_auth->is_admin($usuario->id) == 1 ? "Administrador" : "Atendente" ?>
                                             </td>
                                             <td>
                                                 <?php echo $usuario->active == 1 ? '<span class="badge badge-pill badge-success mb-1">Ativo</span>' : '<span class="badge badge-pill badge-danger mb-1">Inativo</span>'  ?>
-                                            </td>                                            
+                                            </td>
                                             <td>
-                                                <div class="text-center"> 
-                                                    <a title="Editar usuário" href="<?php echo base_url('usuarios/core/'.$usuario->id) ?>" type="button" class="btn btn-icon btn-primary"><i class="ik ik-edit-2"></i></a>                                                                                                                         
+                                                <div class="text-center">
+                                                    <a title="Editar usuário" href="<?php echo base_url('usuarios/core/' . $usuario->id) ?>" type="button" class="btn btn-icon btn-primary"><i class="ik ik-edit-2"></i></a>
                                                     <a title="Excluir usuário" href="#" type="button" class="btn btn-icon btn-danger"><i class="ik ik-trash"></i></a>
                                                 </div>
                                             </td>

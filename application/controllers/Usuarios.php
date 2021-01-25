@@ -37,17 +37,53 @@
                 }else{
                     // -- EDITAR USUÁRIO 
 
-                    $this->form_validation->set_rules('first_name', 'Nome', 'trim|required|min_length[5]|max_length[20]');
-                    $this->form_validation->set_rules('last_name', 'Sobrenome', 'trim|required|min_length[5]|max_length[20]');
-                    $this->form_validation->set_rules('username', 'Usuario', 'trim|required|min_length[5]|max_length[20]');
-                    $this->form_validation->set_rules('email', 'E-mail', 'trim|valid_email|required|min_length[5]|max_length[200]');
+                    $this->form_validation->set_rules('first_name', 'Nome', 'trim|required|min_length[4]|max_length[20]');
+                    $this->form_validation->set_rules('last_name', 'Sobrenome', 'trim|required|min_length[4]|max_length[20]');
+                    $this->form_validation->set_rules('username', 'Usuario', 'trim|required|min_length[4]|max_length[20]|callback_username_check');
+                    $this->form_validation->set_rules('email', 'E-mail', 'trim|valid_email|required|min_length[4]|max_length[200]|callback_email_check');
                     $this->form_validation->set_rules('password', 'Senha', 'trim|min_length[8]');
                     $this->form_validation->set_rules('confirmacao', 'confirmação de senha', 'trim|matches[password]');
 
 
                     if($this->form_validation->run()){
+                        /*
+                            [first_name] => Admin
+                            [last_name] => istrator
+                            [username] => administrator
+                            [email] => admin@admin.com
+                            [password] => 
+                            [Active] => 1
+                        */
+
+                        $data = elements(
+                            array(
+                                'first_name',
+                                'last_name',
+                                'username',
+                                'email',
+                                'password',
+                                'active',                        
+                            ), $this->input->post()
+                        );
+
+                        $password = $this->input->post('password');
+
+                        // Não atualiza a senha
+                        if(!$password){
+                            unset($data['password']);
+                        }
+                        
+                        $data = html_escape($data);
+
+                        if($this->ion_auth->update($id, $data)){
+                            $this->session->set_flashdata('sucesso','Usuario atualizado com sucesso');
+                        }else{
+                            $this->session->set_flashdata('error','Não foi possível o usuário');
+                        }
+                        redirect($this->router->fetch_class());
+
                         echo '<pre>';
-                        print_r($this->input->post());
+                        print_r($data);
                         exit();
 
                     }else{
@@ -79,5 +115,30 @@
             }
            
         }
+
+        public function username_check($username){
+            $usuario_id = $this->input->post('usuario_id');
+
+            if($this->Core_model->get_by_id('users', array('username'=> $username, 'id !=' => $usuario_id ))){
+                $this->form->validation->set_message('username_check', 'Este usuário já existe');
+                return FALSE;
+            }else{
+                return TRUE;
+            }
+            
+        }
+
+        public function email_check($email){
+            $usuario_id = $this->input->post('usuario_id');
+
+            if($this->Core_model->get_by_id('users', array('username'=> $email, 'id !=' => $usuario_id ))){
+                $this->form->validation->set_message('username_check', 'Este e-mail já existe');
+                return FALSE;
+            }else{
+                return TRUE;
+            }
+            
+        }
+
 
     }

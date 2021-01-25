@@ -49,8 +49,6 @@ $this->load->view('layout/navbar');
                             <?php echo (isset($usuario) ?  formata_data_banco_com_hora($usuario->data_ultima_alteracao) : '');
 
                             ?>
-
-
                         </div>
                         <div class="card-body">
 
@@ -102,7 +100,7 @@ $this->load->view('layout/navbar');
                                     <legend class="col-form-label col-sm-2 pt-0">Status: </legend>
                                     <div class="col-sm-10">
                                         <div class="form-check">
-                                            <input class="form-check-input" id="Ativo" type="radio" name="Active" value="1" 
+                                            <input class="form-check-input" id="Ativo" type="radio" name="active" value="1" 
                                                 <?php echo (isset($usuario) and $usuario->active == 1) ? 'checked' : '' ?>
                                             >
                                             <label class="form-check-label" for="Ativo">
@@ -110,7 +108,7 @@ $this->load->view('layout/navbar');
                                             </label>
                                         </div>
                                         <div class="form-check mt-2">
-                                            <input class="form-check-input" id="Inativo" type="radio" name="Active" value="0"
+                                            <input class="form-check-input" id="Inativo" type="radio" name="active" value="0"
                                                 <?php echo (isset($usuario) and $usuario->active == 0) ? 'checked' : '' ?>
                                             >
                                             <label class="form-check-label" for="Inativo">
